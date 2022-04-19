@@ -1,0 +1,3 @@
+C:/Users/danil/CLionProjects/fund/kursah/cmake-build-debug/CMakeFiles/kursah.dir
+C:/Users/danil/CLionProjects/fund/kursah/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/danil/CLionProjects/fund/kursah/cmake-build-debug/CMakeFiles/rebuild_cache.dir

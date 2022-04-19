@@ -1,0 +1,5 @@
+# ninja log v5
+2	2567	6720586108269584	build.ninja	3c68c4747d0fa16b
+8	2432	6709536312660487	CMakeFiles/kursah.dir/main.cpp.obj	27eea52f30c7d28d
+29	1195	6709433721267892	CMakeFiles/kursah.dir/rbTree.cpp.obj	574c2f0efdf92234
+2379	2698	6709433220267222	kursah.exe	21e65982710aed02
