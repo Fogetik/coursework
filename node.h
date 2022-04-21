@@ -13,12 +13,11 @@ enum class Color{
 
 template<class T>
 struct Node{
-    int key;
+    T key;
     T value;
-    Color colorNode;
+    Color colorNode = Color::Red;
     Node<T> *leftNode = nullptr;
     Node<T> *rightNode = nullptr;
-
 
     void drawRed()noexcept{
         this->colorNode = Color::Red;
@@ -28,7 +27,7 @@ struct Node{
         this->colorNode = Color::Black;
     }
 
-    void  redrawNode()
+    void redrawNode()
     {
         if (this->colorNode == Color::Red)
             this->colorNode = Color::Black;
@@ -49,8 +48,6 @@ struct Node{
         else
             return false;
     }
-
-
 
     void copy(const Node<T>& node){
         this->key = node.key;

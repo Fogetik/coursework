@@ -12,11 +12,11 @@ int main() {
     rbTree<int> tree;
     tree.setComparator(new ComparatorInt());
     Node<int> a;
-    a.key = 1;
+    a.key = 4;
     tree.addNode(a);
-    a.key = 2;
+    a.key = 5;
     tree.addNode(a);
-    a.key = 0;
+    a.key = 6;
     tree.addNode(a);
     return 0;
 }
