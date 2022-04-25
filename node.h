@@ -59,4 +59,34 @@ struct Node{
 
 };
 
+template <class T>
+void redrawNodes(Node<T>& a, Node<T>& b)
+{
+    bool blackFirstNode = a.isBlack();
+
+    if (b.isBlack())
+        a.drawBlack();
+    else
+        a.drawRed();
+
+    if (blackFirstNode)
+        b.drawBlack();
+    else
+        b.drawRed();
+}
+
+template<class T>
+void changeNodes(Node<T>& a, Node<T>& b)
+{
+    T value, key;
+
+    key = a.key;
+    a.key = b.key;
+    b.key = key;
+
+    value = a.value;
+    a.value = b.value;
+    b.value = value;
+}
+
 #endif //KURSAH_NODE_H
