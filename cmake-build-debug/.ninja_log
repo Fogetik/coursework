@@ -1,13 +1,5 @@
 # ninja log v5
-2	2567	6725101865909515	build.ninja	3c68c4747d0fa16b
-129	4018	6721991686154065	CMakeFiles/kursah.dir/main.cpp.obj	8ada0e2734f53651
-8	4038	6721991686064295	CMakeFiles/kursah.dir/rbTree.cpp.obj	d7bdeb51b8cca059
-4039	6159	6721991706760836	kursah.exe	7d811b06892bc85c
-28	3264	6725107010653681	CMakeFiles/kursah.dir/rbTree.cpp.obj	d7bdeb51b8cca059
-34	2130	6725107207482211	CMakeFiles/kursah.dir/rbTree.cpp.obj	d7bdeb51b8cca059
-26	1058	6725107521148864	CMakeFiles/kursah.dir/rbTree.cpp.obj	d7bdeb51b8cca059
-3	1220	6725107522867209	CMakeFiles/kursah.dir/main.cpp.obj	8ada0e2734f53651
-1221	1658	6725107527241534	kursah.exe	7d811b06892bc85c
-31	2768	6725107830702639	CMakeFiles/kursah.dir/rbTree.cpp.obj	d7bdeb51b8cca059
-4	2997	6725107833514504	CMakeFiles/kursah.dir/main.cpp.obj	8ada0e2734f53651
-2998	3299	6725107836482540	kursah.exe	7d811b06892bc85c
+2	984	6732267735873416	build.ninja	7d4e6e1037ede681
+9	2790	6732200833270334	CMakeFiles/kursah.dir/main.cpp.obj	8ada0e2734f53651
+29	1035	6726654005222925	CMakeFiles/kursah.dir/rbTree.cpp.obj	d7bdeb51b8cca059
+2791	3141	6732200836624888	kursah.exe	7d811b06892bc85c

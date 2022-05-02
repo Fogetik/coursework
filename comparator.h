@@ -43,7 +43,7 @@ public:
 
     bool equal(Node<int>& a, Node<int>& b)override
     {
-        if (a.key > b.key)
+        if (a.key == b.key)
             return true;
         else
             return false;
