@@ -25,24 +25,22 @@ string generateSecondName(bool male)
 {
     int key;
     key = rand() % 81;
-    if (male){
+    if (male)
         return secondName1[key];
-    }
-    else{
+    else
         return secondName2[key];
-    }
+
 }
 
 string generateThirdName(bool male)
 {
     int key;
     key = rand() % 32;
-    if (male){
+    if (male)
         return thirdName1[key];
-    }
-    else{
+    else
         return thirdName2[key];
-    }
+
 }
 
 void FirstPageAddedProfit::generatePage() {
@@ -55,89 +53,21 @@ void FirstPageAddedProfit::generatePage() {
     this->fio[2] = generateThirdName(male);
     this->year = 2010 + rand()%13;
     this->tax_authority_code = (rand()%90+10)*100 + rand()%100;
+
     this->phone_number = (79 * 100 + rand()%100);
     this->phone_number *= 10'000'000;
     this->phone_number += rand()%10'000'000;
 }
 
-unsigned char* FirstPageAddedProfit::transformData() {
-    unsigned char *data, *data_ptr;
-    data = new unsigned char[43 + this->fio[0].length() + 1 + this->fio[1].length() + 1 + this->fio[2].length() + 1 + 1];
-    data_ptr = data;
-    char*number = new char[10];
-    ulltoa(this->inn, number, 10);
-    for(int i = 0; i < 10; i++){
-        *data_ptr = *number;
-        number++;
-        data_ptr++;
-    }
-    number-=10;
-    delete[] number;
-
-    *data_ptr = '|';
-    data_ptr++;
-
-    number = new char[9];
-    ulltoa(this->kpp, number, 10);
-    for(int i = 0; i < 9; i++){
-        *data_ptr = *number;
-        number++;
-        data_ptr++;
-    }
-    number -=9;
-    delete[] number;
-
-    *data_ptr = '|';
-    data_ptr++;
-
-    number = new char[4];
-    _itoa(this->year, number, 10);
-    for(int i = 0; i < 4; i++){
-        *data_ptr = *number;
-        number++;
-        data_ptr++;
-    }
-    number-=4;
-    delete[] number;
-
-    *data_ptr = '|';
-    data_ptr++;
-
-    number = new char[4];
-    _itoa(this->tax_authority_code, number, 10);
-    for(int i = 0; i < 4; i++){
-        *data_ptr = *number;
-        number++;
-        data_ptr++;
-    }
-    number-=4;
-    delete[] number;
-
-    *data_ptr = '|';
-    data_ptr++;
-
-    number = new char[11];
-    ulltoa(this->phone_number, number, 10);
-    for(int i = 0; i < 11; i++){
-        *data_ptr = *number;
-        number++;
-        data_ptr++;
-    }
-    number-=11;
-    delete[] number;
-
-
-    *data_ptr = '|';
-    data_ptr++;
-    for(int choice = 0; choice < 3; choice++) {
-        for (char i: fio[choice]) {
-            *data_ptr = i;
-            data_ptr++;
-        }
-
-        *data_ptr = '|';
-        data_ptr++;
-    }
-    *data_ptr = '\0';
-    return data;
+string* FirstPageAddedProfit::transformData() {
+    string *res = new string [8];
+    res[0] = std::to_string(this->inn);
+    res[1] = std::to_string(this->kpp);
+    res[2] = std::to_string(this->year);
+    res[3] = std::to_string(this->tax_authority_code);
+    res[4] = std::to_string(this->phone_number);
+    res[5] = this->fio[0];
+    res[6] = this->fio[1];
+    res[7] = this->fio[2];
+    return res;
 }

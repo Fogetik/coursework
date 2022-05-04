@@ -19,7 +19,7 @@ string generateThirdName(bool male);
 class FirstPage{
 public:
     virtual void generatePage() = 0;
-    virtual unsigned char* transformData() = 0;
+    virtual string* transformData() = 0;
     virtual ~FirstPage()= default;
 };
 
@@ -47,7 +47,7 @@ private:
 public:
     FirstPageAddedProfit()= default;
     void generatePage() override;
-    unsigned char* transformData() override;
+    string* transformData() override;
 
     ~FirstPageAddedProfit() = default;
 };
