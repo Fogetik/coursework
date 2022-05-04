@@ -61,6 +61,12 @@ build CMakeFiles/kursah.dir/rbTree.cpp.obj: CXX_COMPILER__kursah_Debug C$:/Users
   OBJECT_DIR = CMakeFiles\kursah.dir
   OBJECT_FILE_DIR = CMakeFiles\kursah.dir
 
+build CMakeFiles/kursah.dir/generator.cpp.obj: CXX_COMPILER__kursah_Debug C$:/Users/danil/CLionProjects/fund/kursah/generator.cpp || cmake_object_order_depends_target_kursah
+  DEP_FILE = CMakeFiles\kursah.dir\generator.cpp.obj.d
+  FLAGS = -Wall -Wextra -g -std=gnu++23
+  OBJECT_DIR = CMakeFiles\kursah.dir
+  OBJECT_FILE_DIR = CMakeFiles\kursah.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target kursah
@@ -69,7 +75,7 @@ build CMakeFiles/kursah.dir/rbTree.cpp.obj: CXX_COMPILER__kursah_Debug C$:/Users
 #############################################
 # Link the executable kursah.exe
 
-build kursah.exe: CXX_EXECUTABLE_LINKER__kursah_Debug CMakeFiles/kursah.dir/main.cpp.obj CMakeFiles/kursah.dir/rbTree.cpp.obj
+build kursah.exe: CXX_EXECUTABLE_LINKER__kursah_Debug CMakeFiles/kursah.dir/main.cpp.obj CMakeFiles/kursah.dir/rbTree.cpp.obj CMakeFiles/kursah.dir/generator.cpp.obj
   FLAGS = -Wall -Wextra -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\kursah.dir
