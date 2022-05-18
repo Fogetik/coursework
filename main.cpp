@@ -12,6 +12,7 @@
 #include <windows.h>
 #include <fstream>
 #include <chrono>
+#include <utility>
 
 using std::string;
 using std::cout;
@@ -21,8 +22,8 @@ void test();
 
 void test1();
 
-double absolute_frequency();
-double relative_frequency();
+int absolute_frequency(DataBase&, string, string);
+double relative_frequency(DataBase&, string, string);
 
 int main() {
     /*rbTree<int> tree;
@@ -50,7 +51,7 @@ int main() {
 }
 
 void test(){
-    srand(time(NULL));
+    srand(time(nullptr));
     GenerateTaxReportAddedProfit reportAddedProfit;
     FirstPage* firstPage = reportAddedProfit.generateFirstPage();
     DataBaseList db(8);
@@ -95,11 +96,11 @@ void test1(){
             cin >> answers;
             db.remove(answers);
         }
-        else if (answers == "insert"){
+        else if (answers == "generate"){
             firstPage->generatePage();
             db.insert(firstPage->transformData());
         }
-        else if (answers == "insert_n"){
+        else if (answers == "generate_n"){
             cout << "count:";
             cin >> count;
             for(int i = 0; i < count; i++){
@@ -123,6 +124,22 @@ void test1(){
                 }
             }
         }
+        else if (answers == "absolute"){
+            cout << "name of column:";
+            cin >> name_column;
+            cout << "the word to search for:";
+            cin >> answers;
+            cout << endl;
+            cout << "absolute frequency:" << absolute_frequency(db, name_column, answers) << endl;
+        }
+        else if (answers == "relative"){
+            cout << "name of column:";
+            cin >> name_column;
+            cout << "the word to search for:";
+            cin >> answers;
+            cout << endl;
+            cout << "relative frequency:" << relative_frequency(db, name_column, answers) << endl;
+        }
         else{
             cout << "incorrect input..." << endl;
         }
@@ -130,5 +147,27 @@ void test1(){
     }
 
     db.drop();
-    return;
+}
+
+int absolute_frequency(DataBase& db, string name_column, string word){
+    int count = 0;
+    vector<string*> vector1 = db.find(std::move(name_column), std::move(word));
+    if (!vector1.empty()){
+        for ([[maybe_unused]] auto str_ptr : vector1)
+            count++;
+    }
+
+    return count;
+}
+
+double relative_frequency(DataBase& db, string name_column, string word){
+    double count = 0, all;
+    vector<string*> vector1 = db.find(std::move(name_column), std::move(word));
+    if (!vector1.empty()){
+        for ([[maybe_unused]] auto str_ptr : vector1)
+            count++;
+    }
+
+    all = db.getCountStr();
+    return (count / all);
 }

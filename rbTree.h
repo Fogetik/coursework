@@ -19,9 +19,14 @@ private:
     Comparator<T>* compare;
     Node<T> *root = nullptr;
     void balanceAdd(stack<Node<T>*>&);
+    void balanceDel(stack<Node<T>*>&);
 public:
     Node<T>* smallTurnRight(Node<T>*, bool);
     Node<T>* smallTurnLeft(Node<T>*, bool);
+
+    Node<T>* smallTurnRightDel(Node<T>*);
+    Node<T>* smallTurnLeftDel(Node<T>*);
+
     void addNode(Node<T>);
     void deleteNode(T k);
 //    rbTree(Comparator<T>*, Node<T>&);
@@ -146,6 +151,36 @@ void rbTree<T>::addNode(Node<T> node) {
 }
 
 template<class T>
+Node<T>* rbTree<T>::smallTurnLeftDel(Node<T>* grandFather){
+    Node<T> *father,  *son_left;
+    father = grandFather->rightNode;
+    if (father->leftNode != nullptr)
+        son_left = father->leftNode;
+    else
+        son_left = nullptr;
+
+
+    father->leftNode = grandFather;
+    grandFather->rightNode = son_left;
+    return father;
+}
+
+template<class T>
+Node<T>* rbTree<T>::smallTurnRightDel(Node<T>* grandFather){
+    Node<T> *father,  *son_right;
+    father = grandFather->rightNode;
+    if (father->leftNode != nullptr)
+        son_right = father->rightNode;
+    else
+        son_right = nullptr;
+
+
+    father->rightNode = grandFather;
+    grandFather->leftNode = son_right;
+    return father;
+}
+
+template<class T>
 void rbTree<T>::deleteNode(T key)
 {
     stack<Node<T>*> st;
@@ -242,81 +277,26 @@ void rbTree<T>::deleteNode(T key)
             st.push(currentNode);
             currentNode = currentNode->leftNode;
         }
-        st.pop();//st.top() - parent of delete node
+
         changeNodes(*f, *currentNode);
         if (currentNode->isRed())
             goto redWithoutSons;
         else if (currentNode->isBlack() && currentNode->rightNode != nullptr)
             goto blackOneSon;
-        else
+        else// black node without sons
         {
-            Node<T>*father, *brother;
-            bool leftBrother;
-            father = st.top();
+
+            auto father = st.top();
             st.pop();
-            //todo: delete current node
-            if (father->isRed())
-            {
-                if (compare->equal(*currentNode, *father->rightNode))
-                {
-                    brother = father->leftNode;
-                    leftBrother = true;
-                }
-                else
-                {
-                    brother = father->rightNode;
-                    leftBrother = false;
-                }
-
-                if (brother->isBlack())
-                {
-                    if ((brother->leftNode->isBlack() && brother->rightNode->isBlack())||
-                        (brother->leftNode == nullptr && brother->rightNode == nullptr))
-                    {
-                        brother->drawRed();
-                        father->drawBlack();
-                    }
-                    else if ((brother->leftNode->isRed() && leftBrother) || (brother->rightNode->isRed() && !leftBrother))
-                    {
-                        brother->drawRed();
-                        father->drawBlack();
-                        if (this->root == father)
-                        {
-                            if (leftBrother)
-                                this->root = smallTurnLeft(father, true);
-                            else
-                                this->root = smallTurnRight(father, true);
-                        }
-                        else
-                        {
-                            Node<T>*grFather = st.top();
-                            if (compare->equal(*grFather->leftNode, *father))
-                            {
-                                if (leftBrother)
-                                    grFather->leftNode = smallTurnLeft(father, true);
-                                else
-                                    grFather->leftNode = smallTurnRight(father, true);
-                            }
-                            else
-                            {
-                                if (leftBrother)
-                                    grFather->rightNode = smallTurnLeft(father, true);
-                                else
-                                    grFather->rightNode = smallTurnRight(father, true);
-                            }
-                        }
-                    }
-
-                }
-                else
-                {
-
-                }
+            if (father->leftNode == currentNode){
+                delete currentNode;
+                father->leftNode = nullptr;
             }
-            else
-            {
-
+            else{
+                delete currentNode;
+                father->rightNode = nullptr;
             }
+
         }
 
     }
@@ -393,5 +373,31 @@ void rbTree<T>::balanceAdd(stack<Node<T>*>& st) {
 
 }
 
+template<class T>
+void rbTree<T>::balanceDel(stack<Node<T>*>& st) {
+    Node<T>*grand_father, *father, *brother;
+
+    if (brother->isBlack()){
+        if (brother->rightNode->isRed()) {
+            brother_black_sonright_red:
+            if (father->isBlack()) brother->drawBlack();
+            else brother->drawRed();
+
+            grand_father = st.top();
+            if (grand_father->leftNode == father)
+                grand_father->leftNode = smallTurnLeftDel(father);
+            else
+                grand_father->rightNode = smallTurnRightDel(father);
+
+        } else if (brother->leftNode->isRed() && brother->rightNode->isBlack()) {
+            brother->drawRed();
+            brother->leftNode->drawBlack();
+            father = smallTurnRightDel(brother);
+            brother = father->rightNode;
+
+            goto brother_black_sonright_red;
+        }
+    }
+}
 
 #endif //KURSAH_RBTREE_H

@@ -57,7 +57,7 @@ public:
     void generatePage() override{
 
     }
-    ~SecondPageAddedProfit() = default;
+    ~SecondPageAddedProfit() override = default;
 };
 
 class GenerateTaxReportAddedProfit:public GenerateTaxReport{

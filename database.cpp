@@ -12,8 +12,12 @@ DataBaseList::DataBaseList(int count) {
     this->count_columns = count;
 }
 
+int DataBaseList::getCountStr()const{
+    return(this->count_str);
+}
+
 void DataBaseList::insert(string *new_item){
-    string* new_item_copy = new string[count_columns+1];
+    auto* new_item_copy = new string[count_columns+1];
     new_item_copy[0] = std::to_string(this->id++);
     for (int i = 0; i < count_columns; i++){
         new_item_copy[i+1] = new_item[i];
@@ -63,10 +67,10 @@ vector<string*> DataBaseList::find(string name_column, string find_str) const {
         return vector_string;
     }
 
-    exist = false;
-    for (auto list_ptr = this->list.begin(); list_ptr != this->list.end(); list_ptr++){
-        if ((*list_ptr)[number_column] == find_str){
-            vector_string.push_back(*list_ptr);
+//    exist = false;
+    for (auto list_ptr : this->list){
+        if (list_ptr[number_column] == find_str){
+            vector_string.push_back(list_ptr);
         }
     }
 

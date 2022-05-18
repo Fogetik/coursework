@@ -18,6 +18,7 @@ using std::forward_list;
 
 class DataBase{
 public:
+    virtual int getCountStr()const = 0;
     virtual void insert(string*) = 0;
     virtual void remove(string) = 0;
     virtual vector<string*> find(string, string) const = 0;
@@ -32,11 +33,13 @@ private:
     int count_columns, id, count_str;
     string* name_columns;
 public:
-    DataBaseList(int count);
+    explicit DataBaseList(int count);
 
     int getCountColumns()const{
         return this->count_columns+1;
     }
+
+    int getCountStr()const override;
 
     void setNameColumns(string* f){
         this->name_columns = new string[count_columns+1];
@@ -66,7 +69,6 @@ public:
     vector<string*> find(string, string)const override;
 
     void update(string)override{
-        return;
     }
 
     void drop()override;
