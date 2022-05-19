@@ -108,7 +108,6 @@ public:
             cout << this->name_columns[i] << " | ";
 
         cout << endl;
-
         this->tree.show(this->count_columns);
     }
 
@@ -121,8 +120,6 @@ public:
         return;
     }
 
-    void drop()override{
-        return;
-    }
+    void drop()override;
 };
 #endif //KURSAH_DATABASE_H

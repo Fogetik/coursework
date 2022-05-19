@@ -39,6 +39,16 @@ private:
         cout << std::endl;
         sim(node->rightNode, k);
     }
+
+    void delete_private(Node<T> *node){
+        if (node == nullptr)
+            return;
+
+        delete_private(node->leftNode);
+        delete_private(node->rightNode);
+        delete node;
+    }
+
     int count;
 public:
     Node<T>* smallTurnRight(Node<T>*, bool);
@@ -57,7 +67,9 @@ public:
 //    rbTree(Comparator<T>*, Node<T>&);
 //    rbTree(Comparator<T>);
     void setComparator(Comparator<T>* comparator);
-
+    void deleteTree(){
+        delete_private(this->root);
+    }
 };
 
 template<class T>
@@ -116,7 +128,7 @@ Node<T>* rbTree<T>::smallTurnRight(Node<T>* grandFather, bool leftSon){
 
 template<class T>
 void rbTree<T>::addNode(Node<T> node) {
-    cout << "adding node..." << endl;
+//    cout << "adding node..." << endl;
     stack<Node<T>*> stack1;
     Node<T> *father;
     if (this->root == nullptr)
@@ -291,7 +303,7 @@ void rbTree<T>::deleteNode(T key)
     //red node without sons
     if(currentNode->isRed() && currentNode->rightNode == nullptr && currentNode->leftNode == nullptr)
     {
-        cout << endl << endl << "red node without sons" << endl << endl;
+//        cout << endl << endl << "red node without sons" << endl << endl;
 
     redWithoutSons:
         currentNode = st.top();
@@ -309,7 +321,7 @@ void rbTree<T>::deleteNode(T key)
     //black node with one son
     else if (currentNode->isBlack() && ((currentNode->rightNode != nullptr) ^ (currentNode->leftNode != nullptr)))
     {
-        cout << endl << endl << "black node with one son" << endl << endl;
+//        cout << endl << endl << "black node with one son" << endl << endl;
 
     blackOneSon:
         if (currentNode->rightNode != nullptr)
@@ -351,7 +363,7 @@ void rbTree<T>::deleteNode(T key)
     // red/black node with two sons
     else if (currentNode->rightNode != nullptr && currentNode->leftNode != nullptr)
     {
-        cout << endl << endl << "red/black node with two sons" << endl << endl;
+//        cout << endl << endl << "red/black node with two sons" << endl << endl;
 
         Node<T>*f = currentNode;
         st.push(currentNode);
@@ -370,7 +382,7 @@ void rbTree<T>::deleteNode(T key)
         else// black node without sons
         {
             black_node_without_sons:
-            cout << endl << endl << "black node without sons" << endl << endl;
+//            cout << endl << endl << "black node without sons" << endl << endl;
 
             auto father = st.top();
             if (father->leftNode == currentNode){
@@ -394,7 +406,7 @@ void rbTree<T>::deleteNode(T key)
     }
     // black node without sons
     else{
-        cout << endl << endl << "black node without sons" << endl << endl;
+//        cout << endl << endl << "black node without sons" << endl << endl;
         auto father = st.top();
         if (father->leftNode == currentNode){
             delete currentNode;

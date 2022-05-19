@@ -113,3 +113,7 @@ void DataBaseRGT::insert(string *new_item){
 void DataBaseRGT::remove(string id) {
     this->tree.deleteNode(id);
 }
+
+void DataBaseRGT::drop(){
+    tree.deleteTree();
+}

@@ -75,8 +75,10 @@ void test() {
     GenerateTaxReportAddedProfit reportAddedProfit;
     FirstPage *firstPage = reportAddedProfit.generateFirstPage();
     db.setNameColumns(n);
-    int count = 50;
-    for (int i = 0; i < count; i++) {
+    int count = 10000;
+    auto begin = std::chrono::steady_clock::now();
+
+    for (int i = 0; i < 10; i++) {
         firstPage->generatePage();
         db.insert(firstPage->transformData());
     }
@@ -90,17 +92,20 @@ void test() {
 //    db.remove(std::to_string(20));
 //    db.show();
 
-    srand(time(nullptr));
-    for (int i = 0; i < 20; i++){
-        cout << "---------------------------------------------------------------------------" << endl;
-        int index = rand() % count;
-        cout << "remove id: " << index << endl << endl;
-        db.remove(std::to_string(index));
-        db.show();
-        cout << endl;
-        count--;
-    }
+//    srand(time(nullptr));
+//    for (int i = 0; i < 250; i++){
+////        cout << "---------------------------------------------------------------------------" << endl;
+//        int index = rand() % count;
+////        cout << "remove id: " << index << endl << endl;
+//        db.remove(std::to_string(index));
+////        cout << endl;
+//        count--;
+//    }
 
+//    db.show();
+    auto end = std::chrono::steady_clock::now();
+    auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin);
+    std::cout << "The time: " << elapsed.count() << " ms\n";
 }
 
 void test1(){
