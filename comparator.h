@@ -15,6 +15,42 @@ public:
     virtual ~Comparator()= default;
 };
 
+class ComparatorString : public Comparator<std::string>
+{
+public:
+    ComparatorString()= default;
+
+    bool compare(Node<std::string>& a, Node<std::string>& b)override {
+        if (std::stoi(a.key) > std::stoi(b.key))
+            return true;
+        else
+            return false;
+    }
+
+    bool compare(std::string& key, Node<std::string>& b)override {
+        if (std::stoi(key) > std::stoi(b.key))
+            return true;
+        else
+            return false;
+    }
+
+    bool equal(std::string& key, Node<std::string>& b)override
+    {
+        if (key == b.key)
+            return true;
+        else
+            return false;
+    }
+
+    bool equal(Node<std::string>& a, Node<std::string>& b)override
+    {
+        if (a.key == b.key)
+            return true;
+        else
+            return false;
+    }
+};
+
 class ComparatorInt : public Comparator<int>
 {
 public:
@@ -48,8 +84,6 @@ public:
         else
             return false;
     }
-
-
 };
 
 #endif //KURSAH_COMPARATOR_H

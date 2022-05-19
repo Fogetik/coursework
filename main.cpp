@@ -26,7 +26,7 @@ int absolute_frequency(DataBase&, string, string);
 double relative_frequency(DataBase&, string, string);
 
 int main() {
-    /*rbTree<int> tree;
+/*    rbTree<int> tree;
     tree.setComparator(new ComparatorInt());
     Node<int> a;
     a.key = 4;
@@ -42,16 +42,16 @@ int main() {
 
 //    a.key = 6;
 //    tree.addNode(a);*/
-
     setlocale(LC_ALL, "rus");
     SetConsoleOutputCP(1251);
     SetConsoleCP(1251);
-    test1();
+    test();
+//    test1();
     return 0;
 }
 
-void test(){
-    srand(time(nullptr));
+void test() {
+    /*srand(time(nullptr));
     GenerateTaxReportAddedProfit reportAddedProfit;
     FirstPage* firstPage = reportAddedProfit.generateFirstPage();
     DataBaseList db(8);
@@ -68,6 +68,37 @@ void test(){
         auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin);
         std::cout << "The time: " << elapsed.count() << " ms\n";
         db.drop();
+    }*/
+    DataBaseRGT db(8);
+    string n[] = {"inn", "kpp", "year", "tax_authority_code", "phone_number", "second_name", "first_name",
+                  "third_name"};
+    GenerateTaxReportAddedProfit reportAddedProfit;
+    FirstPage *firstPage = reportAddedProfit.generateFirstPage();
+    db.setNameColumns(n);
+    int count = 50;
+    for (int i = 0; i < count; i++) {
+        firstPage->generatePage();
+        db.insert(firstPage->transformData());
+    }
+    db.show();
+
+//    db.remove(std::to_string(28));
+//    db.remove(std::to_string(0));
+//    db.remove(std::to_string(3));
+//    db.remove(std::to_string(45));
+//    db.show();
+//    db.remove(std::to_string(20));
+//    db.show();
+
+    srand(time(nullptr));
+    for (int i = 0; i < 20; i++){
+        cout << "---------------------------------------------------------------------------" << endl;
+        int index = rand() % count;
+        cout << "remove id: " << index << endl << endl;
+        db.remove(std::to_string(index));
+        db.show();
+        cout << endl;
+        count--;
     }
 
 }

@@ -14,7 +14,7 @@ enum class Color{
 template<class T>
 struct Node{
     T key;
-    T value;
+    T* value;
     Color colorNode = Color::Red;
     Node<T> *leftNode = nullptr;
     Node<T> *rightNode = nullptr;
@@ -78,7 +78,7 @@ void redrawNodes(Node<T>& a, Node<T>& b)
 template<class T>
 void changeNodes(Node<T>& a, Node<T>& b)
 {
-    T value, key;
+    T *value, key;
 
     key = a.key;
     a.key = b.key;

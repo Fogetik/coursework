@@ -2,7 +2,7 @@
 // Created by danil on 04.05.2022.
 //
 #include "database.h"
-
+#include "comparator.h"
 DataBaseList::DataBaseList(int count) {
     if (count < 0)
         cout << "lol";
@@ -83,4 +83,33 @@ void DataBaseList::drop(){
 
     this->count_str = 0;
     this->list.clear();
+}
+
+
+DataBaseRGT::DataBaseRGT(int count) {
+    if (count < 0)
+        cout << "lol";
+    //todo: throw exception
+    id = 0;
+    this->count_str = 0;
+    this->count_columns = count;
+
+    this->tree.setComparator(new ComparatorString());
+}
+
+int DataBaseRGT::getCountStr()const{
+    return(this->count_str);
+}
+
+void DataBaseRGT::insert(string *new_item){
+    string id_str = std::to_string(this->id++);
+    Node<string> node;
+    node.key = id_str;
+    node.value = new_item;
+    this->tree.addNode(node);
+    this->count_str++;
+}
+
+void DataBaseRGT::remove(string id) {
+    this->tree.deleteNode(id);
 }
