@@ -50,7 +50,7 @@ void DataBaseList::remove(string id) {
     delete[] remove_string;
 }
 
-vector<string*> DataBaseList::find(string name_column, string find_str) const {
+vector<string*> DataBaseList::find(string name_column, string find_str)  {
     int number_column = 0;
     vector<string*> vector_string;
     bool exist = false;
@@ -86,7 +86,7 @@ void DataBaseList::drop(){
 }
 
 
-DataBaseRGT::DataBaseRGT(int count) {
+DataBaseRBT::DataBaseRBT(int count) {
     if (count < 0)
         cout << "lol";
     //todo: throw exception
@@ -97,11 +97,11 @@ DataBaseRGT::DataBaseRGT(int count) {
     this->tree.setComparator(new ComparatorString());
 }
 
-int DataBaseRGT::getCountStr()const{
+int DataBaseRBT::getCountStr()const{
     return(this->count_str);
 }
 
-void DataBaseRGT::insert(string *new_item){
+void DataBaseRBT::insert(string *new_item){
     string id_str = std::to_string(this->id++);
     Node<string> node;
     node.key = id_str;
@@ -110,10 +110,45 @@ void DataBaseRGT::insert(string *new_item){
     this->count_str++;
 }
 
-void DataBaseRGT::remove(string id) {
+void DataBaseRBT::remove(string id) {
     this->tree.deleteNode(id);
 }
 
-void DataBaseRGT::drop(){
+vector<string*> DataBaseRBT::find(string name_column, string find_string){
+    vector<string*> result;
+    string* line = new string[this->count_columns + 1];
+    Node<string> find_node;
+    if (name_column == "id"){
+        find_node = this->tree.findById(find_string);
+        line[0] = find_string;
+        for (int i = 0; i < this->count_columns; i++){
+            line[i+1] = find_node.value[i];
+        }
+
+        result.push_back(line);
+        return result;
+
+    }else{
+        int position = -1;
+        for (int i = 0; i < this->count_columns; i++){
+            if (name_column == this->name_columns[i+1]){
+                position=i;
+                break;
+            }
+        }
+
+        if (position == -1){
+            throw ColumnNotFoundException();
+        }
+
+        vector<string*> a;
+
+        return this->tree.find(position, find_string, this->count_columns+1);
+
+    }
+}
+
+
+void DataBaseRBT::drop(){
     tree.deleteTree();
 }

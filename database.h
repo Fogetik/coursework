@@ -22,7 +22,7 @@ public:
     virtual int getCountStr()const = 0;
     virtual void insert(string*) = 0;
     virtual void remove(string) = 0;
-    virtual vector<string*> find(string, string) const = 0;
+    virtual vector<string*> find(string, string)  = 0;
     virtual void update(string) = 0;
     virtual void drop() = 0;
     virtual ~DataBase() = default;
@@ -68,7 +68,7 @@ public:
         }
     }
 
-    vector<string*> find(string, string)const override;
+    vector<string*> find(string, string) override;
 
     void update(string)override{
     }
@@ -77,14 +77,14 @@ public:
 };
 
 
-class DataBaseRGT: public DataBase{
+class DataBaseRBT: public DataBase{
 private:
     rbTree<string> tree;
 
     int count_columns, id, count_str;
     string* name_columns;
 public:
-    explicit DataBaseRGT(int count);
+    explicit DataBaseRBT(int count);
 
     int getCountColumns()const{
         return this->count_columns+1;
@@ -111,10 +111,7 @@ public:
         this->tree.show(this->count_columns);
     }
 
-    vector<string*> find(string, string)const override{
-        vector<string*> a;
-        return a;
-    }
+    vector<string*> find(string name_column, string find_line) override;
 
     void update(string)override{
         return;

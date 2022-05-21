@@ -45,7 +45,11 @@ int main() {
     setlocale(LC_ALL, "rus");
     SetConsoleOutputCP(1251);
     SetConsoleCP(1251);
-    test();
+    try {
+        test();
+    }catch(std::exception& e){
+        cout << e.what() << endl;
+    }
 //    test1();
     return 0;
 }
@@ -69,20 +73,43 @@ void test() {
         std::cout << "The time: " << elapsed.count() << " ms\n";
         db.drop();
     }*/
-    DataBaseRGT db(8);
+    srand(time(nullptr));
+    DataBaseRBT db(8);
     string n[] = {"inn", "kpp", "year", "tax_authority_code", "phone_number", "second_name", "first_name",
                   "third_name"};
     GenerateTaxReportAddedProfit reportAddedProfit;
     FirstPage *firstPage = reportAddedProfit.generateFirstPage();
     db.setNameColumns(n);
-    int count = 10000;
     auto begin = std::chrono::steady_clock::now();
-
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 250; i++) {
         firstPage->generatePage();
         db.insert(firstPage->transformData());
     }
-    db.show();
+//    db.show();
+    vector<string*>vector1 = db.find("year", "2009");
+
+    if (!vector1.empty()){
+        cout << "-----------" << endl;
+        for (auto str_ptr : vector1){
+            for (int i = 0; i < db.getCountColumns(); i++)
+                cout << str_ptr[i] << " | ";
+
+            cout << endl;
+        }
+    }
+
+    vector1 = db.find("id", "201");
+
+    if (!vector1.empty()){
+        cout << "-----------" << endl;
+        for (auto str_ptr : vector1){
+            for (int i = 0; i < db.getCountColumns(); i++)
+                cout << str_ptr[i] << " | ";
+
+            cout << endl;
+        }
+    }
+
 
 //    db.remove(std::to_string(28));
 //    db.remove(std::to_string(0));

@@ -7,12 +7,22 @@
 
 #include <iostream>
 
-class missingRootException:public std::exception
+class NodeNotFoundException:public std::exception
 {
-
+    const char* what()const throw () {
+        return ("Node not found in tree");
+    }
 
 
 };
 
+class ColumnNotFoundException:public std::exception
+{
+    const char* what()const throw () {
+        return ("Column not found in database");
+    }
+
+
+};
 
 #endif //KURSAH_EXCEPTION_H

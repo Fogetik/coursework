@@ -51,7 +51,7 @@ void FirstPageAddedProfit::generatePage() {
     this->fio[0] = generateSecondName(male);
     this->fio[1] = generateFirstName(male);
     this->fio[2] = generateThirdName(male);
-    this->year = 2010 + rand()%13;
+    this->year = 2000 + rand()%23;
     this->tax_authority_code = (rand()%90+10)*100 + rand()%100;
 
     this->phone_number = (79 * 100 + rand()%100);

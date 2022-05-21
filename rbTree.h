@@ -5,21 +5,27 @@
 #ifndef KURSAH_RBTREE_H
 #define KURSAH_RBTREE_H
 #include "node.h"
+#include "exception.h"
 #include "comparator.h"
 #include <iostream>
 #include <stack>
+#include <vector>
 
 using std::cout;
 using std::endl;
 using std::stack;
+using std::vector;
 
 template<class T>
 class rbTree{
 private:
     Comparator<T>* compare;
     Node<T> *root = nullptr;
+
     void balanceAdd(stack<Node<T>*>&);
+
     void balanceDel(stack<Node<T>*>&, bool);
+
     void sim(Node<T> *node, int k){
         if (node == nullptr)
             return;
@@ -49,16 +55,60 @@ private:
         delete node;
     }
 
-    int count;
-public:
-    Node<T>* smallTurnRight(Node<T>*, bool);
-    Node<T>* smallTurnLeft(Node<T>*, bool);
+    void find_private(int position, T value, int count_column, Node<T>*& node){
+        if (node == nullptr)
+            return;
 
+        find_private(position, value, count_column, node->leftNode);
+        if (node->value[position] == value){
+            this->line_search = new T[count_column];
+            this->line_search[0] = node->key;
+            for (int i = 1; i < count_column; i++){
+                this->line_search[i] = node->value[i-1];
+            }
+            this->vector_search.push_back(this->line_search);
+        }
+
+        find_private(position, value, count_column, node->rightNode);
+    }
+
+    std::vector<T*> vector_search;
+    T* line_search= nullptr;
+    int count;
+
+public:
     Node<T>* smallTurnRightDel(Node<T>*);
     Node<T>* smallTurnLeftDel(Node<T>*);
 
     void addNode(Node<T>);
+    Node<T> findById(std::string id) const {
+        Node<T> *currentNode = this->root;
+        while(!this->compare->equal(id, *currentNode))
+        {
+            if (this->compare->compare(id, *currentNode))
+                currentNode = currentNode->rightNode;
+            else
+                currentNode = currentNode->leftNode;
+
+            if (currentNode == nullptr)
+            {
+                //todo: throw exception about missing node
+//                cout << endl << endl << "i cannot find this node" << endl << endl;
+                throw NodeNotFoundException();
+            }
+        }
+
+        return *currentNode;
+    }
+    std::vector<T*> find(int position, T value, int count_column){
+        this->vector_search.clear();
+        Node<T>* node = this->root;
+        find_private(position, value, count_column, node);
+        return this->vector_search;
+    }
+
     void deleteNode(T k);
+
     void show(int k){
         count = 0;
         sim(root, k);
@@ -66,7 +116,9 @@ public:
     }
 //    rbTree(Comparator<T>*, Node<T>&);
 //    rbTree(Comparator<T>);
+
     void setComparator(Comparator<T>* comparator);
+
     void deleteTree(){
         delete_private(this->root);
     }
@@ -75,55 +127,6 @@ public:
 template<class T>
 void rbTree<T>::setComparator(Comparator<T> *comparator) {
     this->compare = comparator;
-}
-
-template<class T>
-Node<T>* rbTree<T>::smallTurnLeft(Node<T>* grandFather, bool rightSon){
-    Node<T> *father,  *son;
-    father = grandFather->rightNode;
-    if (rightSon)
-            son = father->rightNode;
-    else{
-        Node<T> *f = nullptr;
-        son = father->leftNode;
-        son->rightNode = father;
-        father->leftNode = nullptr;
-        f = father;
-        father = son;
-        son = f;
-    }
-
-
-    if (father->leftNode != nullptr)
-        grandFather = father->leftNode;
-    father->leftNode = grandFather;
-    grandFather->rightNode = nullptr;
-    return father;
-}
-
-template<class T>
-Node<T>* rbTree<T>::smallTurnRight(Node<T>* grandFather, bool leftSon){
-    Node<T> *father,  *son;
-    father = grandFather->leftNode;
-    if (leftSon)
-        son = father->leftNode;
-    else{
-        Node<T> *f = nullptr;
-        son = father->rightNode;
-        son->leftNode = father;
-        father->rightNode = nullptr;
-        f = father;
-        father = son;
-        son = f;
-    }
-
-
-    if (father->rightNode != nullptr)
-        grandFather = father->rightNode;
-
-    father->rightNode = grandFather;
-    grandFather->leftNode = nullptr;
-    return father;
 }
 
 template<class T>
@@ -188,7 +191,7 @@ void rbTree<T>::addNode(Node<T> node) {
 
 template<class T>
 void rbTree<T>::balanceAdd(stack<Node<T>*>& st) {
-    Node<T> *son = nullptr, *father = nullptr, *grFather = nullptr, *uncle = nullptr;
+    Node<T> *father, *grFather, *uncle;
     father = st.top();
     st.pop();
     grFather = st.top();
