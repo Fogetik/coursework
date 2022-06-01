@@ -26,6 +26,7 @@ public:
 class SecondPage{
 public:
     virtual void generatePage() = 0;
+    virtual string* transformData() = 0;
     virtual ~SecondPage()= default;
 };
 
@@ -53,10 +54,16 @@ public:
 };
 
 class SecondPageAddedProfit : public SecondPage{
+private:
+    string city_birth;
+    string current_city;
+    int postal_code, series, number, year_extradition;
+    int amount_income, amount_income_no, amount_income_yes, bank_account;
+    string bank_name;
+    unsigned long long amount_tax_deductions;
 public:
-    void generatePage() override{
-
-    }
+    void generatePage() override;
+    string* transformData() override;
     ~SecondPageAddedProfit() override = default;
 };
 

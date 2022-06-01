@@ -64,6 +64,17 @@ string thirdName2[] = {
         , "Nikolaevna", "Olegovna", "Pavlovna", "Petrovna", "Semenovna", "Yaroslavovna"
 };
 
+string cities[] = {
+        "Aprelevka", "Balashikha", "Beloozersky", "Bronnitsy", "Vereya", "Vidnoye", "Volokolamsk", "Golitsyno",
+        "Dedovsk", "Dmitrov", "Domodedovo", "Drezna", "Dubna", "Yegoryevsk", "Zhukovsky", "Zaraysk", "Zvenigorod",
+        "Zvenigorod", "Istra", "Kashira", "Kolomna", "Korolev", "Krasnoarmeysk", "Krasnogorsk", "Kubinka", "Kurovskoe",
+        "Lobnya", "Lyubertsy", "Mytishchi", "Noginsk", "Odintsovo", "Peresvet", "Podolsk", "Pushkino", "Ramenskoye",
+        "Reutov", "Fryazino", "Khimki", "Khotkovo"
+};
+
+string banks[] = {
+        "Sberbank", "VTB", "Gazprombank", "Alfa", "Tinkoff", "Citibank", "Raiffeisenbank"
+};
 
 /*
 

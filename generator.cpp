@@ -60,23 +60,55 @@ void FirstPageAddedProfit::generatePage() {
 }
 
 string* FirstPageAddedProfit::transformData() {
-    string *res = new string [8];
+    auto *res = new string [8];
     res[0] = std::to_string(this->inn);
     res[1] = std::to_string(this->kpp);
     res[2] = std::to_string(this->year);
     res[3] = std::to_string(this->tax_authority_code);
     res[4] = std::to_string(this->phone_number);
     res[5] = this->fio[0];
-    for (int i = res[5].length(); i < 15; i++)
+    for (size_t i = res[5].length(); i < 15; i++)
         res[5] += " ";
 
     res[6] = this->fio[1];
-    for (int i = res[6].length(); i < 15; i++)
+    for (size_t i = res[6].length(); i < 15; i++)
         res[6] += " ";
 
     res[7] = this->fio[2];
-    for (int i = res[7].length(); i < 19; i++)
+    for (size_t i = res[7].length(); i < 19; i++)
         res[7] += " ";
 
+    return res;
+}
+
+void SecondPageAddedProfit::generatePage() {
+    this->city_birth = cities[rand()%40];
+    this->current_city = cities[rand()%40];
+    this->postal_code = 140000+rand()%10000;
+    this->series = 4000 + rand()%1000;
+    this->number = rand()%300000+200000;
+    this->year_extradition = 1980 + rand()%20;
+    this->amount_income = 1000000 + rand()%1000000;
+    this->amount_income_no = rand()%200000 + 400000;
+    this->amount_income_yes = this->amount_income - this->amount_income_no;
+    this->bank_name = banks[rand()%8];
+    this->bank_account = 4100000000000000 + rand()%10000*10000 + rand()%10000;
+    this->amount_tax_deductions = rand()%26000 + 26000;
+}
+
+string* SecondPageAddedProfit::transformData() {
+    auto *res = new string [12];
+    res[0] = this->city_birth;
+    res[1] = this->current_city;
+    res[2] = std::to_string(this->postal_code);
+    res[3] = std::to_string(this->series);
+    res[4] = std::to_string(this->number);
+    res[5] = std::to_string(this->year_extradition);
+    res[6] = std::to_string(this->amount_income);
+    res[7] = std::to_string(this->amount_income_no);
+    res[8] = std::to_string(this->amount_income_yes);
+    res[9] = bank_name;
+    res[10] = std::to_string(this->bank_account);
+    res[11] = std::to_string(this->amount_tax_deductions);
     return res;
 }
