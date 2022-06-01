@@ -1,16 +1,12 @@
 #include <iostream>
-#include "node.h"
 #include "rbTree.h"
 #include "generator.h"
-#include "comparator.h"
 #include "database.h"
-#include <cstring>
 #include <string>
 #include <cstdlib>
-#include <locale.h>
+#include <clocale>
 #include <forward_list>
 #include <windows.h>
-#include <fstream>
 #include <chrono>
 #include <utility>
 
@@ -46,33 +42,48 @@ int main() {
     SetConsoleOutputCP(1251);
     SetConsoleCP(1251);
     try {
+        //test1();
         test();
     }catch(std::exception& e){
         cout << e.what() << endl;
     }
-//    test1();
     return 0;
 }
 
 void test() {
-    /*srand(time(nullptr));
+    srand(time(nullptr));
     GenerateTaxReportAddedProfit reportAddedProfit;
     FirstPage* firstPage = reportAddedProfit.generateFirstPage();
     DataBaseList db(8);
     string n[] = {"inn" , "kpp", "year", "tax_authority_code", "phone_number", "second_name", "first_name", "third_name"};
     db.setNameColumns(n);
-    for (int step = 1; step <= 10; step++) {
-        auto begin = std::chrono::steady_clock::now();
-        for (int i = 0; i < 2'000'000; i++) {
-            firstPage->generatePage();
-            db.insert(firstPage->transformData());
-        }
+    auto begin = std::chrono::steady_clock::now();
+    for (int i = 0; i < 100; i++) {
+        firstPage->generatePage();
+        db.insert(firstPage->transformData());
+    }
 
-        auto end = std::chrono::steady_clock::now();
-        auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin);
-        std::cout << "The time: " << elapsed.count() << " ms\n";
-        db.drop();
-    }*/
+    db.show();
+    cout << "---" << endl;
+    vector<string*> a = db.find("year", "2009");
+    for (string* line : a){
+        for (int i =0; i < db.getCountColumns(); i++)
+            cout << line[i] << " | ";
+
+        cout << endl;
+        delete[]line;
+    }
+    cout << "---" << endl;
+    db.show();
+    auto end = std::chrono::steady_clock::now();
+    auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin);
+    std::cout << "The time: " << elapsed.count() << " ms\n";
+    //db.drop();
+
+
+
+
+    /*
     srand(time(nullptr));
     DataBaseRBT db(8);
     string n[] = {"inn", "kpp", "year", "tax_authority_code", "phone_number", "second_name", "first_name",
@@ -86,7 +97,7 @@ void test() {
         db.insert(firstPage->transformData());
     }
 //    db.show();
-    vector<string*>vector1 = db.find("year", "2009");
+    vector<string*>vector1 = db.find("year", "1975");
 
     if (!vector1.empty()){
         cout << "-----------" << endl;
@@ -97,6 +108,8 @@ void test() {
             cout << endl;
         }
     }
+    else
+        cout << "pizdec"<<endl;
 
     vector1 = db.find("id", "201");
 
@@ -132,7 +145,7 @@ void test() {
 //    db.show();
     auto end = std::chrono::steady_clock::now();
     auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin);
-    std::cout << "The time: " << elapsed.count() << " ms\n";
+    std::cout << "The time: " << elapsed.count() << " ms\n";*/
 }
 
 void test1(){

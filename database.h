@@ -8,6 +8,7 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include <fstream>
 #include <forward_list>
 #include "rbTree.h"
 
@@ -15,6 +16,7 @@ using std::endl;
 using std::cout;
 using std::vector;
 using std::string;
+using std::fstream;
 using std::forward_list;
 
 class DataBase{
@@ -31,11 +33,17 @@ public:
 
 class DataBaseList: public DataBase{
 private:
+    int start_file, end_file;
+    fstream file;
     forward_list<string*> list;
-    int count_columns, id, count_str;
+    int count_columns, id, count_entry, max_entry, count_delete, last_id;
     string* name_columns;
 public:
     explicit DataBaseList(int count);
+
+    void setCountColumns(int s){
+        this->count_columns = s;
+    }
 
     int getCountColumns()const{
         return this->count_columns+1;
@@ -54,6 +62,15 @@ public:
 
     void remove(string)override;
 
+    vector<string*> get(){
+        vector<string*> result;
+        for (auto str_ptr : this->list)
+            result.push_back(str_ptr);
+
+        std::reverse(result.begin(), result.end());
+        return result;
+    }
+
     void show(){
         for (int i =0; i < this->count_columns + 1; i++)
             cout << this->name_columns[i] << " | ";
@@ -62,7 +79,7 @@ public:
 
         for (auto str_ptr : this->list){
             for (int i =0; i < this->count_columns + 1; i++)
-                cout << str_ptr[i] << " | ";
+                cout << str_ptr[i] << "|";
 
             cout << endl;
         }
@@ -86,6 +103,10 @@ private:
 public:
     explicit DataBaseRBT(int count);
 
+    void setCountColumns(int s){
+        this->count_columns = s;
+    }
+
     int getCountColumns()const{
         return this->count_columns+1;
     }
@@ -102,6 +123,11 @@ public:
     void insert(string*)override;
 
     void remove(string)override;
+
+    //todo:suka blyat'
+    /*vector<string*> get(){
+        return nullptr;
+    }*/
 
     void show(){
         for (int i =0; i < this->count_columns + 1; i++)

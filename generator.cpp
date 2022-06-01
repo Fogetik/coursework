@@ -24,7 +24,7 @@ string generateFirstName(bool male)
 string generateSecondName(bool male)
 {
     int key;
-    key = rand() % 81;
+    key = rand() % 78;
     if (male)
         return secondName1[key];
     else
@@ -35,7 +35,7 @@ string generateSecondName(bool male)
 string generateThirdName(bool male)
 {
     int key;
-    key = rand() % 32;
+    key = rand() % 31;
     if (male)
         return thirdName1[key];
     else
@@ -67,7 +67,16 @@ string* FirstPageAddedProfit::transformData() {
     res[3] = std::to_string(this->tax_authority_code);
     res[4] = std::to_string(this->phone_number);
     res[5] = this->fio[0];
+    for (int i = res[5].length(); i < 15; i++)
+        res[5] += " ";
+
     res[6] = this->fio[1];
+    for (int i = res[6].length(); i < 15; i++)
+        res[6] += " ";
+
     res[7] = this->fio[2];
+    for (int i = res[7].length(); i < 19; i++)
+        res[7] += " ";
+
     return res;
 }

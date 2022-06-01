@@ -236,7 +236,7 @@ void rbTree<T>::balanceAdd(stack<Node<T>*>& st) {
 
         Node<T> *grand_grand_father = st.top();
         if (grand_grand_father->isRed())
-            this->balanceAdd(st);
+                this->balanceAdd(st);
     }
 
 
@@ -384,7 +384,6 @@ void rbTree<T>::deleteNode(T key)
             goto blackOneSon;
         else// black node without sons
         {
-            black_node_without_sons:
 //            cout << endl << endl << "black node without sons" << endl << endl;
 
             auto father = st.top();
