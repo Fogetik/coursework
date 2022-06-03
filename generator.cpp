@@ -82,8 +82,8 @@ string* FirstPageAddedProfit::transformData() {
 }
 
 void SecondPageAddedProfit::generatePage() {
-    this->city_birth = cities[rand()%40];
-    this->current_city = cities[rand()%40];
+    this->city_birth = cities[rand()%39];
+    this->current_city = cities[rand()%39];
     this->postal_code = 140000+rand()%10000;
     this->series = 4000 + rand()%1000;
     this->number = rand()%300000+200000;
@@ -91,15 +91,21 @@ void SecondPageAddedProfit::generatePage() {
     this->amount_income = 1000000 + rand()%1000000;
     this->amount_income_no = rand()%200000 + 400000;
     this->amount_income_yes = this->amount_income - this->amount_income_no;
-    this->bank_name = banks[rand()%8];
-    this->bank_account = 4100000000000000 + rand()%10000*10000 + rand()%10000;
+    this->bank_name = banks[rand()%7];
+    this->bank_account = 4106400000000000 + rand()%10000*10000 + rand()%10000;
     this->amount_tax_deductions = rand()%26000 + 26000;
 }
 
 string* SecondPageAddedProfit::transformData() {
     auto *res = new string [12];
     res[0] = this->city_birth;
+    for (size_t i = res[0].length(); i < 14; i++)
+        res[0] += " ";
+
     res[1] = this->current_city;
+    for (size_t i = res[1].length(); i < 14; i++)
+        res[1] += " ";
+
     res[2] = std::to_string(this->postal_code);
     res[3] = std::to_string(this->series);
     res[4] = std::to_string(this->number);
@@ -108,6 +114,9 @@ string* SecondPageAddedProfit::transformData() {
     res[7] = std::to_string(this->amount_income_no);
     res[8] = std::to_string(this->amount_income_yes);
     res[9] = bank_name;
+    for (size_t i = res[9].length(); i < 15; i++)
+        res[9] += " ";
+
     res[10] = std::to_string(this->bank_account);
     res[11] = std::to_string(this->amount_tax_deductions);
     return res;

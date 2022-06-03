@@ -8,10 +8,10 @@
 		},
 		"paths" : 
 		{
-			"cmake" : "C:/Users/danil/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/221.5591.52/bin/cmake/win/bin/cmake.exe",
-			"cpack" : "C:/Users/danil/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/221.5591.52/bin/cmake/win/bin/cpack.exe",
-			"ctest" : "C:/Users/danil/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/221.5591.52/bin/cmake/win/bin/ctest.exe",
-			"root" : "C:/Users/danil/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/221.5591.52/bin/cmake/win/share/cmake-3.22"
+			"cmake" : "C:/Users/danil/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/221.5787.29/bin/cmake/win/bin/cmake.exe",
+			"cpack" : "C:/Users/danil/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/221.5787.29/bin/cmake/win/bin/cpack.exe",
+			"ctest" : "C:/Users/danil/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/221.5787.29/bin/cmake/win/bin/ctest.exe",
+			"root" : "C:/Users/danil/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/221.5787.29/bin/cmake/win/share/cmake-3.22"
 		},
 		"version" : 
 		{
@@ -35,7 +35,7 @@
 			}
 		},
 		{
-			"jsonFile" : "cache-v2-d37e4e4cfea2658989cf.json",
+			"jsonFile" : "cache-v2-05f4924bc668a1bb5c09.json",
 			"kind" : "cache",
 			"version" : 
 			{
@@ -44,7 +44,7 @@
 			}
 		},
 		{
-			"jsonFile" : "cmakeFiles-v1-935f1beeadae3c8e0b0c.json",
+			"jsonFile" : "cmakeFiles-v1-68203959c5de57f05349.json",
 			"kind" : "cmakeFiles",
 			"version" : 
 			{
@@ -53,7 +53,7 @@
 			}
 		},
 		{
-			"jsonFile" : "toolchains-v1-f7bf632a5c087a1ba646.json",
+			"jsonFile" : "toolchains-v1-d444840fce96d308ea29.json",
 			"kind" : "toolchains",
 			"version" : 
 			{
@@ -66,7 +66,7 @@
 	{
 		"cache-v2" : 
 		{
-			"jsonFile" : "cache-v2-d37e4e4cfea2658989cf.json",
+			"jsonFile" : "cache-v2-05f4924bc668a1bb5c09.json",
 			"kind" : "cache",
 			"version" : 
 			{
@@ -76,7 +76,7 @@
 		},
 		"cmakeFiles-v1" : 
 		{
-			"jsonFile" : "cmakeFiles-v1-935f1beeadae3c8e0b0c.json",
+			"jsonFile" : "cmakeFiles-v1-68203959c5de57f05349.json",
 			"kind" : "cmakeFiles",
 			"version" : 
 			{
@@ -96,7 +96,7 @@
 		},
 		"toolchains-v1" : 
 		{
-			"jsonFile" : "toolchains-v1-f7bf632a5c087a1ba646.json",
+			"jsonFile" : "toolchains-v1-d444840fce96d308ea29.json",
 			"kind" : "toolchains",
 			"version" : 
 			{

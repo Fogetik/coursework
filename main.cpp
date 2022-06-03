@@ -17,7 +17,7 @@ using std::cin;
 void test();
 
 void test1();
-
+string* merge(string *a, int, string *b, int);
 int absolute_frequency(DataBase&, string, string);
 double relative_frequency(DataBase&, string, string);
 
@@ -54,31 +54,53 @@ void test() {
     srand(time(nullptr));
     GenerateTaxReportAddedProfit reportAddedProfit;
     FirstPage* firstPage = reportAddedProfit.generateFirstPage();
-    DataBaseList db(8);
-    string n[] = {"inn" , "kpp", "year", "tax_authority_code", "phone_number", "second_name", "first_name", "third_name"};
+    SecondPage* secondPage = reportAddedProfit.generateSecondPage();
+    DataBaseRBT db(20);
+    string n[] = {"inn" , "kpp", "year", "tax_authority_code", "phone_number", "second_name", "first_name", "third_name",
+                  "city_birth", "current_city", "postal_code", "series", "number", "year_extradition", "amount_income",
+                  "amount_income_no", "amount_income_yes", "bank_name", "bank_account", "amount_tax_deductions"};
     db.setNameColumns(n);
+
     auto begin = std::chrono::steady_clock::now();
-    for (int i = 0; i < 100; i++) {
+    for (int i = 0; i < 1000; i++) {
         firstPage->generatePage();
-        db.insert(firstPage->transformData());
+        secondPage->generatePage();
+        db.insert(merge(firstPage->transformData(), 8, secondPage->transformData(), 12));
     }
 
-    db.show();
-    cout << "---" << endl;
-    vector<string*> a = db.find("year", "2009");
-    for (string* line : a){
-        for (int i =0; i < db.getCountColumns(); i++)
-            cout << line[i] << " | ";
+    vector<string*>vector1 = db.find("first_name", "Danila");
 
-        cout << endl;
-        delete[]line;
+    if (!vector1.empty()){
+        cout << "-----------" << endl;
+        for (auto str_ptr : vector1){
+            for (int i = 0; i < db.getCountColumns(); i++)
+                cout << str_ptr[i] << " | ";
+
+            cout << endl;
+        }
     }
-    cout << "---" << endl;
-    db.show();
+    else
+        cout << "pizdec"<<endl;
+
     auto end = std::chrono::steady_clock::now();
     auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin);
     std::cout << "The time: " << elapsed.count() << " ms\n";
-    //db.drop();
+//    begin = std::chrono::steady_clock::now();
+////    db.show();
+//    cout << "---" << endl;
+//    vector<string*> a = db.find("year", "2009");
+//    end = std::chrono::steady_clock::now();
+//    elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin);
+//    std::cout << "The time: " << elapsed.count() << " ms\n";
+//    begin = std::chrono::steady_clock::now();
+//    for (string* line : a){
+//        db.remove(line[0] );
+////        delete[]line;
+//    }
+//    cout << "---" << endl;
+//
+//    std::cout << "The time: " << elapsed.count() << " ms\n";
+//    db.drop();
 
 
 
@@ -224,6 +246,22 @@ void test1(){
 
     db.drop();
 }
+
+string* merge(string *a, int count_a, string *b, int count_b){
+    string* result = new string[count_a+count_b];
+    for (int i = 0; i < count_a; i++){
+        result[i] = a[i];
+    }
+
+    for (int i = 0; i < count_b; i++){
+        result[i + count_a] = b[i];
+    }
+
+    delete []a;
+    delete []b;
+    return result;
+}
+
 
 int absolute_frequency(DataBase& db, string name_column, string word){
     int count = 0;

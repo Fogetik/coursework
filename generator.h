@@ -58,9 +58,9 @@ private:
     string city_birth;
     string current_city;
     int postal_code, series, number, year_extradition;
-    int amount_income, amount_income_no, amount_income_yes, bank_account;
+    int amount_income, amount_income_no, amount_income_yes, amount_tax_deductions;
     string bank_name;
-    unsigned long long amount_tax_deductions;
+    unsigned long long bank_account;
 public:
     void generatePage() override;
     string* transformData() override;

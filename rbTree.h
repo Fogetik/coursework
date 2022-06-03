@@ -32,15 +32,15 @@ private:
         count++;
         sim(node->leftNode, k);
 
-        std::cout << node->key << " | ";
+        std::cout << node->key << "|";
         std::string* str = node->value;
         for (int i =0; i < k; i++)
-            cout << str[i] << " | ";
+            cout << str[i] << "|";
 
-        if (this->compare->compare(*this->root, *node))
-            cout << " true ";
-        else
-            cout << " false ";
+//        if (this->compare->compare(*this->root, *node))
+//            cout << " true ";
+//        else
+//            cout << " false ";
 
         cout << std::endl;
         sim(node->rightNode, k);
@@ -51,7 +51,13 @@ private:
             return;
 
         delete_private(node->leftNode);
+        node->leftNode = nullptr;
         delete_private(node->rightNode);
+        node->rightNode = nullptr;
+        if (node == this->root){
+            this->root = nullptr;
+        }
+
         delete node;
     }
 
@@ -79,9 +85,32 @@ private:
 public:
     Node<T>* smallTurnRightDel(Node<T>*);
     Node<T>* smallTurnLeftDel(Node<T>*);
+    bool existByKey(std::string key){
+        Node<T>* current_node = this->root;
+        while(true){
+            if (this->compare->equal(key, *current_node))
+                return true;
+            else if (this->compare->compare(key, *current_node)){
+                current_node = current_node->rightNode;
+            }
+            else{
+                current_node = current_node->leftNode;
+            }
 
+            if (current_node == nullptr)
+                return false;
+        }
+
+    }
+    bool empty(){
+        if (this->root == nullptr)
+            return true;
+        else
+            return false;
+    }
     void addNode(Node<T>);
-    Node<T> findById(std::string id) const {
+
+    Node<T> findById(T id) const {
         Node<T> *currentNode = this->root;
         while(!this->compare->equal(id, *currentNode))
         {
@@ -100,6 +129,7 @@ public:
 
         return *currentNode;
     }
+
     std::vector<T*> find(int position, T value, int count_column){
         this->vector_search.clear();
         Node<T>* node = this->root;
@@ -306,32 +336,40 @@ void rbTree<T>::deleteNode(T key)
     //red node without sons
     if(currentNode->isRed() && currentNode->rightNode == nullptr && currentNode->leftNode == nullptr)
     {
-//        cout << endl << endl << "red node without sons" << endl << endl;
-
     redWithoutSons:
-        currentNode = st.top();
-        if (this->compare->compare(key, *currentNode))
-        {
-            delete currentNode->rightNode;
-            currentNode->rightNode = nullptr;
+        if (st.empty()){
+            delete this->root;
+            this->root = nullptr;
         }
-        else
-        {
-            delete currentNode->leftNode;
-            currentNode->leftNode = nullptr;
+        else {
+            currentNode = st.top();
+            if (this->compare->compare(key, *currentNode)) {
+                delete currentNode->rightNode;
+                currentNode->rightNode = nullptr;
+            } else {
+                delete currentNode->leftNode;
+                currentNode->leftNode = nullptr;
+            }
         }
     }
     //black node with one son
     else if (currentNode->isBlack() && ((currentNode->rightNode != nullptr) ^ (currentNode->leftNode != nullptr)))
     {
-//        cout << endl << endl << "black node with one son" << endl << endl;
-
     blackOneSon:
         if (currentNode->rightNode != nullptr)
         {
             Node<T> *f = currentNode->rightNode;
-            currentNode = st.top();
-            if (this->compare->compare(f->key, *currentNode))
+            bool st_empty = false;
+            if (!st.empty())
+                currentNode = st.top();
+            else
+                st_empty = true;
+
+            if (st_empty){
+                delete this->root;
+                this->root = f;
+            }
+            else if (this->compare->compare(f->key, *currentNode))
             {
                 delete currentNode->rightNode;
                 currentNode->rightNode = f;
@@ -347,8 +385,17 @@ void rbTree<T>::deleteNode(T key)
         else
         {
             Node<T> *f = currentNode->leftNode;
-            currentNode = st.top();
-            if (this->compare->compare(f->key, *currentNode))
+            bool st_empty = false;
+            if (!st.empty())
+                currentNode = st.top();
+            else
+                st_empty = true;
+
+            if (st_empty){
+                delete this->root;
+                this->root = f;
+            }
+            else if (this->compare->compare(f->key, *currentNode))
             {
                 delete currentNode->rightNode;
                 currentNode->rightNode = f;
@@ -366,8 +413,6 @@ void rbTree<T>::deleteNode(T key)
     // red/black node with two sons
     else if (currentNode->rightNode != nullptr && currentNode->leftNode != nullptr)
     {
-//        cout << endl << endl << "red/black node with two sons" << endl << endl;
-
         Node<T>*f = currentNode;
         st.push(currentNode);
         currentNode = currentNode->rightNode;
@@ -384,23 +429,18 @@ void rbTree<T>::deleteNode(T key)
             goto blackOneSon;
         else// black node without sons
         {
-//            cout << endl << endl << "black node without sons" << endl << endl;
-
             auto father = st.top();
+            bool left_delete_node;
             if (father->leftNode == currentNode){
+                left_delete_node = true;
                 delete currentNode;
                 father->leftNode = nullptr;
             }
             else{
+                left_delete_node = false;
                 delete currentNode;
                 father->rightNode = nullptr;
             }
-
-            bool left_delete_node;
-            if (father->leftNode == nullptr)
-                left_delete_node = true;
-            else
-                left_delete_node = false;
 
             this->balanceDel(st, left_delete_node);
         }
@@ -408,22 +448,18 @@ void rbTree<T>::deleteNode(T key)
     }
     // black node without sons
     else{
-//        cout << endl << endl << "black node without sons" << endl << endl;
         auto father = st.top();
+        bool left_delete_node;
         if (father->leftNode == currentNode){
+            left_delete_node = true;
             delete currentNode;
             father->leftNode = nullptr;
         }
         else{
+            left_delete_node = false;
             delete currentNode;
             father->rightNode = nullptr;
         }
-
-        bool left_delete_node;
-        if (father->leftNode == nullptr)
-            left_delete_node = true;
-        else
-            left_delete_node = false;
 
         this->balanceDel(st, left_delete_node);
     }
@@ -438,9 +474,7 @@ start_balance:
     father = st.top();
     st.pop();
     if (left_delete_node) {
-
         brother = father->rightNode;
-
         if (brother->isBlack()) {
             if (brother->rightNode != nullptr && brother->rightNode->isRed()) {
                 brother_black_sonright_red:
@@ -458,14 +492,16 @@ start_balance:
                         grand_father->rightNode = smallTurnLeftDel(father);
                 }
 
-            } else if (brother->leftNode != nullptr && brother->leftNode->isRed()
+            }
+            else if (brother->leftNode != nullptr && brother->leftNode->isRed()
             && (brother->rightNode == nullptr || brother->rightNode->isBlack())) {
                 brother->drawRed();
                 brother->leftNode->drawBlack();
                 father->rightNode = smallTurnRightDel(brother);
 
                 goto brother_black_sonright_red;
-            } else if ((brother->leftNode == nullptr || brother->leftNode->isBlack())
+            }
+            else if ((brother->leftNode == nullptr || brother->leftNode->isBlack())
             && (brother->rightNode == nullptr ||brother->rightNode->isBlack())) {
                 brother->drawRed();
                 if (father->isRed()) {
@@ -486,7 +522,7 @@ start_balance:
             father->drawRed();
             brother->drawBlack();
             if (st.empty()){
-                root = smallTurnRightDel(father);
+                root = smallTurnLeftDel(father);
                 return;
             }
 
@@ -501,31 +537,32 @@ start_balance:
             st.push(father);
             goto start_balance;
         }
-    }else{
-
+    }
+    else{
         brother = father->leftNode;
-
         if (brother->isBlack()) {
             if (brother->leftNode != nullptr && brother->leftNode->isRed()) {
                 brother_black_sonleft_red:
                 if (father->isBlack()) brother->drawBlack();
                 else brother->drawRed();
 
-                brother->rightNode->drawBlack();
+                brother->leftNode->drawBlack();
                 grand_father = st.top();
                 if (grand_father->leftNode == father)
                     grand_father->leftNode = smallTurnRightDel(father);
                 else
                     grand_father->rightNode = smallTurnRightDel(father);
 
-            } else if (brother->rightNode != nullptr && brother->rightNode->isRed()
+            }
+            else if (brother->rightNode != nullptr && brother->rightNode->isRed()
             && (brother->leftNode == nullptr || brother->leftNode->isBlack())) {
                 brother->drawRed();
                 brother->rightNode->drawBlack();
                 father->leftNode = smallTurnLeftDel(brother);
 
                 goto brother_black_sonleft_red;
-            } else if ((brother->leftNode == nullptr || brother->leftNode->isBlack())
+            }
+            else if ((brother->leftNode == nullptr || brother->leftNode->isBlack())
             && (brother->rightNode == nullptr || brother->rightNode->isBlack())) {
                 brother->drawRed();
                 if (father->isRed()) {

@@ -98,8 +98,10 @@ class DataBaseRBT: public DataBase{
 private:
     rbTree<string> tree;
 
-    int count_columns, id, count_str;
     string* name_columns;
+    int start_file, end_file;
+    fstream file;
+    int count_columns, id, count_entry, max_entry, count_delete, last_id;
 public:
     explicit DataBaseRBT(int count);
 
